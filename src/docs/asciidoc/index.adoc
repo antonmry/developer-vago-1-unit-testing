@@ -15,21 +15,20 @@ ifndef::sourcedir[:sourcedir: ../java]
 
 == Axenda
 
-* 19:30 - VigoTech e VigoJUG
+* _(19:30)_ VigoJUG e VigoTech
 * Developer Vago
-* Motivación
-* JUnit 4
-* JUnit 5
-* Spock
-* 20:30 - Charlas lostrego e debate
-* 21:00 - Kahoot
+* Motivación unit test
+* JUnit 4, JUnit 5, Spock
+* _(20:30)_ Charlas lostrego e debate
+* _(21:00)_ Kahoot
+* _(21:30)_ Refrescos
 
 == VigoJUG
 
-* Un meetup o primeiro martes de cada mes
+* Un meetup **o primeiro martes de cada mes**
 * ¿Te animas cunha charla?. Licencias de JetBrains ;-)
 * Outras iniciativas: obradoiro virtual #VigoJUG-taller
-* Canal de slack #VigoJUG en http://www.vigotech.org
+* Canal de slack **#VigoJUG** en http://www.vigotech.org
 
 image::sponsors.jpg[sponsors,800,200]
 
@@ -40,10 +39,10 @@ image::vigotech.jpg[height=600px]
 
 == Developer Vago
 
-* Charla sobre unha temática xeral preparada polo VigoJUG
-* De utilidade para todo o mundo, independentemente da tua experiencia
-* Facelo ameno, non estamos para teorías cuánticas ;-)
-* Rematar con charlas lóstrego e/ou debates abertos
+* Charla sobre **unha temática xeral** preparada polo VigoJUG
+* De utilidade **para todo o mundo**, independentemente da tua experiencia
+* Facelo **ameno**, non estamos para teorías cuánticas ;-)
+* Rematar con **charlas lóstrego** e/ou **debates abertos**
 
 == Non sexades tímidos: ¡¡participar!!
 
@@ -53,6 +52,200 @@ Source: http://gif.co/vc7E.gif
 
 [background-color="#01303a"]
 == Motivación das probas unitarias
+
+=== É mais áxil
+
+Especialmente en proxectos grandes, por exemplo, para encontrar bugs.
+
+Acompañar a resolución de bugs cun test é unha moi boa idea.
+
+=== Calidade do código
+
+=== Facilita os cambios e simplifica a integración
+
+=== Documenta
+
+=== Mellora o deseño
+
+Se é mais doado de testar, é mais modular.
+
+¿Facer os test primeiro? TDD.
+
+=== Reduce costes
+
+[background-color="#01303a"]
+== Exemplo: Fibonacci
+
+=== Entrevista
+
+Implementar un programa que devolva o número **n** da secuencia de Fibonacci. **n** pasase coma parámetro.
+
+[source]
+----
+1, 1 , 2 , 3 , 5 , 8 , 13 , 21 , 34 , 55 , 89 , 144
+----
+
+=== Solución Java
+
+[%notitle]
+=== Solución Java
+
+[source,java]
+----
+public class BadFibonacci {
+
+    // Fixme: very bad performance
+    private static int fibonacci(int n) {
+        if (n <= 1) return n; else
+            return fibonacci(n-1) + fibonacci(n-2);
+    }
+
+    public static void main(String[] args) {
+        System.out.println("Result: " + fibonacci(4));
+    }
+}
+
+----
+
+[background-color="#01303a"]
+== JUnit 4
+
+=== @test e assert
+
+[%notitle]
+=== @test e assert
+
+[source,java]
+----
+    @Test
+    public void fibonacciTestSimple() {
+        FibonacciWithJUnit4 f = new FibonacciWithJUnit4();
+        assert(f.fibonacci(4) == 3);
+    }
+----
+
+=== assertFalse
+
+[%notitle]
+
+=== assertFalse
+[source,java]
+----
+    @Test
+    public void fibonacciTestZero() {
+        FibonacciWithJUnit4 f = new FibonacciWithJUnit4();
+        assertFalse(f.fibonacci(1) == 0 );
+    }
+----
+
+=== assertEquals
+
+[%notitle]
+=== assertEquals
+
+[source,java]
+----
+    @Test
+    public void bestFibonacciTestSimple() {
+        FibonacciWithJUnit4 f = new FibonacciWithJUnit4();
+        assertEquals(f.fibonacci(4), 3);
+    }
+----
+
+=== @Ignore
+
+[%notitle]
+=== @Ignore
+
+[source,java]
+----
+    @Ignore("Demo, no hacerlo en casa")
+    @Test
+    public void ignoredFibonacciTestSimple() {
+        FibonacciWithJUnit4 f = new FibonacciWithJUnit4();
+        assertEquals(f.fibonacci(4), 0);
+    }
+----
+
+=== assertThat
+
+[%notitle]
+=== assertThat
+
+[source,java]
+----
+    @Test
+    public void testAssertThatBothContainsString() {
+        FibonacciWithJUnit4 f = new FibonacciWithJUnit4();
+        String temp = fibonacci(1) + " " + fibonacci(4);
+        assertThat(temp, both(containsString("0")).and(containsString("3")));
+    }
+----
+
+=== Exceptions
+
+[%notitle]
+=== Exceptions
+
+[source,java]
+----
+    @Test(expected = NullPointerException.class)
+    public void testException() {
+        FibonacciWithJUnit4 f = new FibonacciWithJUnit4();
+        Integer i = 0;
+        i = null;
+        f.fibonacci(i.intValue());
+    }
+----
+
+=== timeout
+
+=== timeout
+[%notitle]
+
+[source,java]
+----
+    @Test(timeout = 5000)
+    public void testTimeout() {
+        try {
+            TimeUnit.SECONDS.sleep(100);
+        } catch (Exception e) {
+            // Don't do this at home
+        }
+    }
+----
+
+=== @AfterClass, @BeforeClass, @After
+
+[%notitle]
+=== @AfterClass, @BeforeClass, @After
+
+[source,java]
+----
+    private static FibonacciWithJUnit4 f2;
+
+    @BeforeClass
+    public static void setupTest() {
+        f2 = new FibonacciWithJUnit4();
+    }
+
+    @AfterClass
+    public static void clear() {
+        f2 = null;
+    }
+
+    @Test
+    public void fibonacciTestSimpleWithBefore() {
+        assert (f2.fibonacci(4) == 3);
+    }
+
+    @After
+    public void done() {
+        System.out.println("Done!");
+    }
+----
+
+== Test parametrizados
 
 [background-color="#01303a"]
 == Charlas lostrego?
@@ -67,6 +260,9 @@ Source: http://gif.co/vc7E.gif
 * Spock
 * Outra?
 * Non fago tests
+
+[background-color="#01303a"]
+== Kahoot
 
 == ¿Dúbidas?
 

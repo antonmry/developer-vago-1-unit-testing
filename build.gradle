@@ -11,14 +11,15 @@ buildscript {
         classpath 'org.ajoberstar:gradle-git:1.1.0'
         classpath 'io.ratpack:ratpack-groovy:1.2.0'
         classpath 'org.kordamp.gradle:livereload-gradle-plugin:0.2.1'
+        // JUnit5 Gradle Plugin
+        // classpath 'org.junit.platform:junit-platform-gradle-plugin:1.0.1'
     }
 
 }
 
 plugins {
-  id 'com.github.jruby-gradle.base' version '1.4.0'
+    id 'com.github.jruby-gradle.base' version '1.4.0'
 }
-
 
 repositories {
     jcenter()
@@ -27,12 +28,34 @@ repositories {
 apply plugin: 'com.github.jruby-gradle.base'
 apply plugin: 'org.ysb33r.vfs'
 apply plugin: 'java'
+// JUnit5 Gradle Plugin
+//apply plugin: 'org.junit.platform.gradle.plugin'
 apply plugin: 'org.asciidoctor.convert'
 apply plugin: 'org.kordamp.gradle.livereload'
 
 dependencies {
     gems 'rubygems:slim:3.0.8'
     gems 'rubygems:thread_safe:0.3.5'
+}
+
+ext.junit4Version        = '4.12'
+ext.junitVintageVersion  = '4.12.2'
+ext.junitPlatformVersion = '1.0.2'
+ext.junitJupiterVersion  = '5.0.2'
+
+dependencies {
+    // JUnit Jupiter API and TestEngine implementation
+    // Typically it should be testCompile or testRuntime)
+    compile("org.junit.jupiter:junit-jupiter-api:${junitJupiterVersion}")
+    runtime("org.junit.jupiter:junit-jupiter-engine:${junitJupiterVersion}")
+
+    // If you also want to support JUnit 3 and JUnit 4 tests
+    // Typically it should be testCompile or testRuntime)
+    compile("junit:junit:${junit4Version}")
+    runtime("org.junit.vintage:junit-vintage-engine:${junitVintageVersion}")
+
+    // To avoid compiler warnings about @API annotations in JUnit code
+    compileOnly('org.apiguardian:apiguardian-api:1.0.0')
 }
 
 ext {
@@ -44,7 +67,7 @@ ext {
 }
 
 asciidoctorj {
-   version = '1.5.6'
+    version = '1.5.6'
 }
 
 apply from: 'gradle/pdf.gradle'
