@@ -368,10 +368,22 @@ public class BadFibonacci {
 == Test parametrizados con JUnit 5
 
 [background-color="#01303a"]
-== Charlas lostrego?
+== Spock Framework
+
+=== TODO
+
+[background-color="#01303a"]
+== Integración con gradle e maven
+
+=== Reporte cobertura
+
+[background-color="#01303a"]
+== Lightning talks?
 
 [background-color="#01303a"]
 == Debate aberto
+
+=== ¿Facedes tests unitarios?
 
 === ¿Qué librería usades para testing?
 
@@ -381,13 +393,22 @@ public class BadFibonacci {
 * Outra?
 * Non fago tests
 
+=== ¿Onde paramos?
+
+* ¿Métodos públicos?
+* ¿100% de cobertura?
+
+=== ¿Qué usades para mocks?
+
+=== ¿Algo mais?
+
 [background-color="#01303a"]
 == Kahoot
 
 == ¿Dúbidas?
 
-* Slides:
-* Código:
+* Slides: http://www.vigojug.org/developer-vago-1-unit-testing/
+* Código: https://github.com/vigojug/developer-vago-1-unit-testing
 * Slack: canal #vigojug en http://www.vigotech.org
 
 
