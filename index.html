@@ -1,0 +1,221 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8" /><meta name="author" content="VigoJUG" /><title>Developer Vago 1: Unit testing</title><meta content="yes" name="apple-mobile-web-app-capable" /><meta content="black-translucent" name="apple-mobile-web-app-status-bar-style" /><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui" name="viewport" /><link href="reveal.js/css/reveal.css" rel="stylesheet" /><link rel="stylesheet" href="reveal.js/css/theme/summit.css" id="theme" /><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.3.0/css/font-awesome.min.css" /><link href="reveal.js/lib/css/zenburn.css" rel="stylesheet" /><script>document.write( '<link rel="stylesheet" href="reveal.js/css/print/' + ( window.location.search.match( /print-pdf/gi ) ? 'pdf' : 'paper' ) + '.css" type="text/css" media="print">' );</script><link rel="stylesheet" type="text/css" href="reveal.js/css/theme/asciinema-player.css" />
+<link rel="stylesheet" type="text/css" href="reveal.js/css/theme/github-gist.css" />
+<script src="reveal.js/css/theme/asciinema-player.js"></script>
+<script src="reveal.js/css/theme/cytoscape.min.js"></script>
+<script src="https://cdn.rawgit.com/cpettitt/dagre/v0.7.4/dist/dagre.min.js"></script>
+<script src="https://cdn.rawgit.com/cytoscape/cytoscape.js-dagre/1.5.0/cytoscape-dagre.js"></script>
+<script src="reveal.js/css/theme/dependency-graph.js"></script>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/c3/0.4.11/c3.min.css" rel="stylesheet" type="text/css"/> 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.4/d3.min.js" charset="utf-8"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/c3/0.4.11/c3.min.js"></script>
+
+</head><body><div class="reveal"><div class="slides"><section class="title" data-state="title" data-transition="zoom" data-transition-speed="fast" data-background-image="./images/title.jpeg"><h1>Developer Vago 1</h1><h2>Unit testing</h2><p class="author"><small>VigoJUG</small></p></section><section id="axenda"><h2>Axenda</h2><div class="ulist"><ul><li><p><em>(19:30)</em> VigoJUG e VigoTech</p></li><li><p>Developer Vago</p></li><li><p>Motivación unit test</p></li><li><p>JUnit 4, JUnit 5, Spock</p></li><li><p><em>(20:30)</em> Charlas lostrego e debate</p></li><li><p><em>(21:00)</em> Kahoot</p></li><li><p><em>(21:30)</em> Refrescos</p></li></ul></div></section>
+<section id="vigojug"><h2>VigoJUG</h2><div class="ulist"><ul><li><p>Un meetup <strong>o primeiro martes de cada mes</strong></p></li><li><p>¿Te animas cunha charla?. Licencias de JetBrains ;-)</p></li><li><p>Outras iniciativas: obradoiro virtual #VigoJUG-taller</p></li><li><p>Canal de slack <strong>#VigoJUG</strong> en <a href="http://www.vigotech.org" class="bare">http://www.vigotech.org</a></p></li></ul></div>
+<div class="imageblock" style=""><img src="./images/sponsors.jpg" alt="sponsors" width="800" height="200" /></div></section>
+<section id="vigotech-alliance"><div class="imageblock" style=""><img src="./images/vigotech.jpg" alt="vigotech" width="1280" height="600px" /></div></section>
+<section id="developer-vago"><h2>Developer Vago</h2><div class="ulist"><ul><li><p>Charla sobre <strong>unha temática xeral</strong> preparada polo VigoJUG</p></li><li><p>De utilidade <strong>para todo o mundo</strong>, independentemente da tua experiencia</p></li><li><p>Facelo <strong>ameno</strong>, non estamos para teorías cuánticas ;-)</p></li><li><p>Rematar con <strong>charlas lóstrego</strong> e/ou <strong>debates abertos</strong></p></li></ul></div></section>
+<section id="non-sexades-tmidos-participar"><h2>Non sexades tímidos: ¡¡participar!!</h2><div class="imageblock" style=""><img src="./images/baby.gif" alt="baby" width="200" height="300" /></div>
+<div class="paragraph"><p>Source: <a href="http://gif.co/vc7E.gif" class="bare">http://gif.co/vc7E.gif</a></p></div></section>
+<section><section id="motivacin-das-probas-unitarias" data-background-color="#01303a"><h2>Motivación das probas unitarias</h2></section><section id="-mais-xil"><h2>É mais áxil</h2><div class="paragraph"><p>Especialmente en proxectos grandes, por exemplo, para encontrar bugs.</p></div>
+<div class="paragraph"><p>Acompañar a resolución de bugs cun test é unha moi boa idea.</p></div></section><section id="calidade-do-cdigo"><h2>Calidade do código</h2></section><section id="facilita-os-cambios-e-simplifica-a-integracin"><h2>Facilita os cambios e simplifica a integración</h2></section><section id="documenta"><h2>Documenta</h2></section><section id="mellora-o-deseo"><h2>Mellora o deseño</h2><div class="paragraph"><p>Se é mais doado de testar, é mais modular.</p></div>
+<div class="paragraph"><p>¿Facer os test primeiro? TDD.</p></div></section><section id="reduce-costes"><h2>Reduce costes</h2></section></section>
+<section><section id="exemplo-fibonacci" data-background-color="#01303a"><h2>Exemplo: Fibonacci</h2></section><section id="entrevista"><h2>Entrevista</h2><div class="paragraph"><p>Implementar un programa que devolva o número <strong>n</strong> da secuencia de Fibonacci. <strong>n</strong> pasase coma parámetro.</p></div>
+<div class="listingblock"><div class="content"><pre class="highlight"><code>1, 1 , 2 , 3 , 5 , 8 , 13 , 21 , 34 , 55 , 89 , 144</code></pre></div></div></section><section id="solucin-java"><h2>Solución Java</h2></section><section id="solucin-java-2"><div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">public class BadFibonacci {
+
+    // Fixme: very bad performance
+    private static int fibonacci(int n) {
+        if (n &lt;= 1) return n; else
+            return fibonacci(n-1) + fibonacci(n-2);
+    }
+
+    public static void main(String[] args) {
+        System.out.println("Result: " + fibonacci(4));
+    }
+}</code></pre></div></div></section></section>
+<section><section id="junit-4" data-background-color="#01303a"><h2>JUnit 4</h2></section><section id="test-e-assert"><h2>@test e assert</h2></section><section id="test-e-assert-2"><div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">    @Test
+    public void fibonacciTestSimple() {
+        FibonacciWithJUnit4 f = new FibonacciWithJUnit4();
+        assert(f.fibonacci(4) == 3);
+    }</code></pre></div></div></section><section id="assertfalse"><h2>assertFalse</h2></section><section id="assertfalse-2"><div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">    @Test
+    public void fibonacciTestZero() {
+        FibonacciWithJUnit4 f = new FibonacciWithJUnit4();
+        assertFalse(f.fibonacci(1) == 0 );
+    }</code></pre></div></div></section><section id="assertequals"><h2>assertEquals</h2></section><section id="assertequals-2"><div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">    @Test
+    public void bestFibonacciTestSimple() {
+        FibonacciWithJUnit4 f = new FibonacciWithJUnit4();
+        assertEquals(f.fibonacci(4), 3);
+    }</code></pre></div></div></section><section id="ignore"><h2>@Ignore</h2></section><section id="ignore-2"><div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">    @Ignore("Demo, no hacerlo en casa")
+    @Test
+    public void ignoredFibonacciTestSimple() {
+        FibonacciWithJUnit4 f = new FibonacciWithJUnit4();
+        assertEquals(f.fibonacci(4), 0);
+    }</code></pre></div></div></section><section id="assertthat"><h2>assertThat</h2></section><section id="assertthat-2"><div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">    @Test
+    public void testAssertThatBothContainsString() {
+        FibonacciWithJUnit4 f = new FibonacciWithJUnit4();
+        String temp = fibonacci(1) + " " + fibonacci(4);
+        assertThat(temp, both(containsString("0")).and(containsString("3")));
+    }</code></pre></div></div></section><section id="exceptions"><h2>Exceptions</h2></section><section id="exceptions-2"><div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">    @Test(expected = NullPointerException.class)
+    public void testException() {
+        FibonacciWithJUnit4 f = new FibonacciWithJUnit4();
+        Integer i = 0;
+        i = null;
+        f.fibonacci(i.intValue());
+    }</code></pre></div></div></section><section id="timeout"><h2>timeout</h2></section><section id="timeout-2"><h2>timeout</h2><div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">    @Test(timeout = 5000)
+    public void testTimeout() {
+        try {
+            TimeUnit.SECONDS.sleep(100);
+        } catch (Exception e) {
+            // Don't do this at home
+        }
+    }</code></pre></div></div></section><section id="afterclass-beforeclass-after"><h2>@AfterClass, @BeforeClass, @After</h2></section><section id="afterclass-beforeclass-after-2"><div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">    private static FibonacciWithJUnit4 f2;
+
+    @BeforeClass
+    public static void setupTest() {
+        f2 = new FibonacciWithJUnit4();
+    }
+
+    @AfterClass
+    public static void clear() {
+        f2 = null;
+    }
+
+    @Test
+    public void fibonacciTestSimpleWithBefore() {
+        assert (f2.fibonacci(4) == 3);
+    }
+
+    @After
+    public void done() {
+        System.out.println("Done!");
+    }</code></pre></div></div></section></section>
+<section id="test-parametrizados-con-junit-4"><h2>Test parametrizados con JUnit 4</h2></section>
+<section><section id="junit-5" data-background-color="#01303a"><h2>JUnit 5</h2></section><section id="introduccin"><h2>Introducción</h2><div class="ulist"><ul><li><p>Mais granular</p></li><li><p>Permite mais runners e extensións</p></li><li><p>Java 8</p></li><li><p>Compatibilidade con JUnit 4</p></li></ul></div></section><section id="test-e-assert-3"><h2>@Test e assert</h2></section><section id="test-e-assert-4"><div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">    @Test
+    public void fibonacciTestSimple() {
+        FibonacciWithJUnit5 f = new FibonacciWithJUnit5();
+        Assertions.assertTrue(
+                fibonacci(4) == 3,
+                () -&gt; "Fibonnaci number " + 4 + " is " + 3);
+    }</code></pre></div></div></section><section id="disabled"><h2>@Disabled</h2></section><section id="disabled-2"><div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">    @Disabled("Demo, non o facer na casa ;-)")
+    @Test
+    public void ignoredFibonacciTestSimple() {
+        FibonacciWithJUnit5 f = new FibonacciWithJUnit5();
+        assertEquals(f.fibonacci(4), 0);
+    }</code></pre></div></div></section><section id="composed-tests-with-assertall"><h2>Composed tests with assertAll</h2></section><section id="composed-tests-with-assertall-2"><div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">    @Test
+    public void testAssertThatBothContainsString() {
+        FibonacciWithJUnit5 f = new FibonacciWithJUnit5();
+        String temp = f.fibonacci(1) + " " + f.fibonacci(4);
+        Assertions.assertAll("Our composed test",
+                () -&gt; Assertions.assertTrue(temp.contains("1")),
+                () -&gt; Assertions.assertTrue(temp.contains("3"))
+        );
+    }</code></pre></div></div></section><section id="exception"><h2>Exception</h2></section><section id="exception-2"><div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">    @Test()
+    public void testException() {
+        FibonacciWithJUnit5 f = new FibonacciWithJUnit5();
+        Integer i = null;
+        Assertions.assertThrows(NullPointerException.class, () -&gt; f.fibonacci(i.intValue()));
+    }</code></pre></div></div></section><section id="timeout-3"><h2>Timeout</h2></section><section id="timeout-4"><div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">    @Test()
+    public void testTimeout() throws InterruptedException {
+        Assertions.assertTimeout(Duration.ofMillis(1), () -&gt; Thread.sleep(10));
+    }</code></pre></div></div></section><section id="afterall-beforeall-aftereach"><h2>@AfterAll, @BeforeAll, @AfterEach</h2></section><section id="afterall-beforeall-aftereach-2"><div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">    private static FibonacciWithJUnit5 f2;
+
+    @BeforeAll
+    public static void setupTest() {
+        f2 = new FibonacciWithJUnit5();
+    }
+
+    @AfterAll
+    public static void clear() {
+        f2 = null;
+    }
+
+    @Test
+    public void fibonacciTestSimpleWithBefore() {
+        assert (f2.fibonacci(4) == 3);
+    }
+
+    @AfterEach
+    public void done() {
+        System.out.println("Done!");
+    }</code></pre></div></div></section></section>
+<section id="test-parametrizados-con-junit-5"><h2>Test parametrizados con JUnit 5</h2></section>
+<section id="charlas-lostrego" data-background-color="#01303a"><h2>Charlas lostrego?</h2></section>
+<section><section id="debate-aberto" data-background-color="#01303a"><h2>Debate aberto</h2></section><section id="qu-librera-usades-para-testing"><h2>¿Qué librería usades para testing?</h2><div class="ulist"><ul><li><p>JUnit 4</p></li><li><p>JUnit 5</p></li><li><p>Spock</p></li><li><p>Outra?</p></li><li><p>Non fago tests</p></li></ul></div></section></section>
+<section id="kahoot" data-background-color="#01303a"><h2>Kahoot</h2></section>
+<section id="dbidas"><h2>¿Dúbidas?</h2><div class="ulist"><ul><li><p>Slides:</p></li><li><p>Código:</p></li><li><p>Slack: canal #vigojug en <a href="http://www.vigotech.org" class="bare">http://www.vigotech.org</a></p></li></ul></div></section></div></div><script src="reveal.js/lib/js/head.min.js"></script><script src="reveal.js/js/reveal.js"></script><script>// See https://github.com/hakimel/reveal.js#configuration for a full list of configuration options
+Reveal.initialize({
+  // Display controls in the bottom right corner
+  controls: true,
+  // Display a presentation progress bar
+  progress: true,
+  // Display the page number of the current slide
+  slideNumber: true,
+  // Push each slide change to the browser history
+  history: true,
+  // Enable keyboard shortcuts for navigation
+  keyboard: true,
+  // Enable the slide overview mode
+  overview: true,
+  // Vertical centering of slides
+  center: true,
+  // Enables touch navigation on devices with touch input
+  touch: true,
+  // Loop the presentation
+  loop: false,
+  // Change the presentation direction to be RTL
+  rtl: false,
+  // Turns fragments on and off globally
+  fragments: true,
+  // Flags if the presentation is running in an embedded mode,
+  // i.e. contained within a limited portion of the screen
+  embedded: false,
+  // Number of milliseconds between automatically proceeding to the
+  // next slide, disabled when set to 0, this value can be overwritten
+  // by using a data-autoslide attribute on your slides
+  autoSlide: 0,
+  // Stop auto-sliding after user input
+  autoSlideStoppable: true,
+  // Enable slide navigation via mouse wheel
+  mouseWheel: false,
+  // Hides the address bar on mobile devices
+  hideAddressBar: true,
+  // Opens links in an iframe preview overlay
+  previewLinks: false,
+  // Theme (e.g., beige, black, league, night, serif, simple, sky, solarized, white)
+  // NOTE setting the theme in the config no longer works in reveal.js 3.x
+  //theme: Reveal.getQueryHash().theme || 'summit',
+  // Transition style (e.g., none, fade, slide, convex, concave, zoom)
+  transition: Reveal.getQueryHash().transition || 'linear',
+  // Transition speed (e.g., default, fast, slow)
+  transitionSpeed: 'default',
+  // Transition style for full page slide backgrounds (e.g., none, fade, slide, convex, concave, zoom)
+  backgroundTransition: 'fade',
+  // Number of slides away from the current that are visible
+  viewDistance: 3,
+  // Parallax background image (e.g., "'https://s3.amazonaws.com/hakim-static/reveal-js/reveal-parallax-1.jpg'")
+  parallaxBackgroundImage: '',
+  // Parallax background size in CSS syntax (e.g., "2100px 900px")
+  parallaxBackgroundSize: '',
+
+  // The "normal" size of the presentation, aspect ratio will be preserved
+  // when the presentation is scaled to fit different resolutions. Can be
+  // specified using percentage units.
+  width: 960,
+  height: 700,
+
+  // Factor of the display size that should remain empty around the content
+  margin: 0.1,
+
+  // Bounds for smallest/largest possible scale to apply to content
+  minScale: 0.2,
+  maxScale: 1.5,
+
+  // Optional libraries used to extend on reveal.js
+  dependencies: [
+      { src: 'reveal.js/lib/js/classList.js', condition: function() { return !document.body.classList; } },
+      { src: 'reveal.js/plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+      { src: 'reveal.js/plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+      { src: 'reveal.js/plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } },
+      { src: 'reveal.js/plugin/zoom-js/zoom.js', async: true, condition: function() { return !!document.body.classList; } },
+      { src: 'reveal.js/plugin/notes/notes.js', async: true, condition: function() { return !!document.body.classList; } }
+  ]
+});</script></body></html>
