@@ -245,7 +245,127 @@ public class BadFibonacci {
     }
 ----
 
-== Test parametrizados
+== Test parametrizados con JUnit 4
+
+[background-color="#01303a"]
+== JUnit 5
+
+=== Introducción
+
+* Mais granular
+* Permite mais runners e extensións
+* Java 8
+* Compatibilidade con JUnit 4
+
+=== @Test e assert
+
+[%notitle]
+=== @Test e assert
+
+[source,java]
+----
+    @Test
+    public void fibonacciTestSimple() {
+        FibonacciWithJUnit5 f = new FibonacciWithJUnit5();
+        Assertions.assertTrue(
+                fibonacci(4) == 3,
+                () -> "Fibonnaci number " + 4 + " is " + 3);
+    }
+----
+
+=== @Disabled
+
+[%notitle]
+=== @Disabled
+
+[source,java]
+----
+
+    @Disabled("Demo, non o facer na casa ;-)")
+    @Test
+    public void ignoredFibonacciTestSimple() {
+        FibonacciWithJUnit5 f = new FibonacciWithJUnit5();
+        assertEquals(f.fibonacci(4), 0);
+    }
+----
+
+=== Composed tests with assertAll
+
+[%notitle]
+=== Composed tests with assertAll
+
+[source,java]
+----
+    @Test
+    public void testAssertThatBothContainsString() {
+        FibonacciWithJUnit5 f = new FibonacciWithJUnit5();
+        String temp = f.fibonacci(1) + " " + f.fibonacci(4);
+        Assertions.assertAll("Our composed test",
+                () -> Assertions.assertTrue(temp.contains("1")),
+                () -> Assertions.assertTrue(temp.contains("3"))
+        );
+    }
+----
+
+=== Exception
+
+[%notitle]
+=== Exception
+
+[source,java]
+----
+    @Test()
+    public void testException() {
+        FibonacciWithJUnit5 f = new FibonacciWithJUnit5();
+        Integer i = null;
+        Assertions.assertThrows(NullPointerException.class, () -> f.fibonacci(i.intValue()));
+    }
+----
+
+=== Timeout
+
+[%notitle]
+=== Timeout
+
+[source,java]
+----
+    @Test()
+    public void testTimeout() throws InterruptedException {
+        Assertions.assertTimeout(Duration.ofMillis(1), () -> Thread.sleep(10));
+    }
+----
+
+=== @AfterAll, @BeforeAll, @AfterEach
+
+[%notitle]
+=== @AfterAll, @BeforeAll, @AfterEach
+
+[source,java]
+----
+    private static FibonacciWithJUnit5 f2;
+
+    @BeforeAll
+    public static void setupTest() {
+        f2 = new FibonacciWithJUnit5();
+    }
+
+    @AfterAll
+    public static void clear() {
+        f2 = null;
+    }
+
+    @Test
+    public void fibonacciTestSimpleWithBefore() {
+        assert (f2.fibonacci(4) == 3);
+    }
+
+    @AfterEach
+    public void done() {
+        System.out.println("Done!");
+    }
+----
+
+== Test parametrizados con JUnit 5
 
 [background-color="#01303a"]
 == Charlas lostrego?

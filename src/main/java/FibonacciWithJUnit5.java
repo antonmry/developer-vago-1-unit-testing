@@ -1,13 +1,13 @@
+import org.junit.jupiter.api.*;
+
+import java.time.Duration;
 import java.util.concurrent.TimeUnit;
 
-import org.junit.*;
-import static org.hamcrest.CoreMatchers.both;
-import static org.hamcrest.CoreMatchers.containsString;
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 
-public class FibonacciWithJUnit4 {
+
+public class FibonacciWithJUnit5 {
 
     public int fibonacci(int n) {
         if (n <= 1) return n;
@@ -16,61 +16,62 @@ public class FibonacciWithJUnit4 {
 
     @Test
     public void fibonacciTestSimple() {
-        FibonacciWithJUnit4 f = new FibonacciWithJUnit4();
-        assert (fibonacci(4) == 3);
+        FibonacciWithJUnit5 f = new FibonacciWithJUnit5();
+        Assertions.assertTrue(
+                fibonacci(4) == 3,
+                () -> "Fibonnaci number " + 4 + " is " + 3);
     }
 
     @Test
     public void fibonacciTestZero() {
-        FibonacciWithJUnit4 f = new FibonacciWithJUnit4();
+        FibonacciWithJUnit5 f = new FibonacciWithJUnit5();
         assertFalse(f.fibonacci(1) == 0);
     }
 
     @Test
     public void bestFibonacciTestSimple() {
-        FibonacciWithJUnit4 f = new FibonacciWithJUnit4();
+        FibonacciWithJUnit5 f = new FibonacciWithJUnit5();
         assertEquals(f.fibonacci(4), 3);
     }
 
-    @Ignore("Demo, non o facer na casa ;-)")
+    // JUnit 5
+    @Disabled("Demo, non o facer na casa ;-)")
     @Test
     public void ignoredFibonacciTestSimple() {
-        FibonacciWithJUnit4 f = new FibonacciWithJUnit4();
+        FibonacciWithJUnit5 f = new FibonacciWithJUnit5();
         assertEquals(f.fibonacci(4), 0);
     }
 
     @Test
     public void testAssertThatBothContainsString() {
-        FibonacciWithJUnit4 f = new FibonacciWithJUnit4();
-        String temp = fibonacci(1) + " " + fibonacci(4);
-        assertThat(temp, both(containsString("0")).and(containsString("3")));
+        FibonacciWithJUnit5 f = new FibonacciWithJUnit5();
+        String temp = f.fibonacci(1) + " " + f.fibonacci(4);
+        Assertions.assertAll("Our composed test",
+                () -> Assertions.assertTrue(temp.contains("1")),
+                () -> Assertions.assertTrue(temp.contains("3"))
+        );
     }
 
-    @Test(expected = NullPointerException.class)
+    @Test()
     public void testException() {
-        FibonacciWithJUnit4 f = new FibonacciWithJUnit4();
-        Integer i = 0;
-        i = null;
-        f.fibonacci(i.intValue());
+        FibonacciWithJUnit5 f = new FibonacciWithJUnit5();
+        Integer i = null;
+        Assertions.assertThrows(NullPointerException.class, () -> f.fibonacci(i.intValue()));
     }
 
-    @Test(timeout = 1000)
-    public void testTimeout() {
-        try {
-            TimeUnit.SECONDS.sleep(100);
-        } catch (Exception e) {
-            // Don't do this at home
-        }
+    @Test()
+    public void testTimeout() throws InterruptedException {
+        Assertions.assertTimeout(Duration.ofMillis(1), () -> Thread.sleep(10));
     }
 
-    private static FibonacciWithJUnit4 f2;
+    private static FibonacciWithJUnit5 f2;
 
-    @BeforeClass
+    @BeforeAll
     public static void setupTest() {
-        f2 = new FibonacciWithJUnit4();
+        f2 = new FibonacciWithJUnit5();
     }
 
-    @AfterClass
+    @AfterAll
     public static void clear() {
         f2 = null;
     }
@@ -80,7 +81,7 @@ public class FibonacciWithJUnit4 {
         assert (f2.fibonacci(4) == 3);
     }
 
-    @After
+    @AfterEach
     public void done() {
         System.out.println("Done!");
     }
