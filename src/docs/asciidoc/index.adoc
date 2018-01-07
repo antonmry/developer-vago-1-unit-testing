@@ -1,0 +1,77 @@
+= Developer Vago 1: Unit testing
+VigoJUG
+2018-01-09
+:revnumber: {project-version}
+:example-caption!:
+ifndef::imagesdir[:imagesdir: images]
+ifndef::sourcedir[:sourcedir: ../java]
+:navigation:
+:menu:
+:status:
+:title-slide-background-image: title.jpeg
+:title-slide-transition: zoom
+:title-slide-transition-speed: fast
+:icons: font
+
+== Axenda
+
+* 19:30 - VigoTech e VigoJUG
+* Developer Vago
+* Motivación
+* JUnit 4
+* JUnit 5
+* Spock
+* 20:30 - Charlas lostrego e debate
+* 21:00 - Kahoot
+
+== VigoJUG
+
+* Un meetup o primeiro martes de cada mes
+* ¿Te animas cunha charla?. Licencias de JetBrains ;-)
+* Outras iniciativas: obradoiro virtual #VigoJUG-taller
+* Canal de slack #VigoJUG en http://www.vigotech.org
+
+image::sponsors.jpg[sponsors,800,200]
+
+[%notitle]
+== VigoTech Alliance
+
+image::vigotech.jpg[height=600px]
+
+== Developer Vago
+
+* Charla sobre unha temática xeral preparada polo VigoJUG
+* De utilidade para todo o mundo, independentemente da tua experiencia
+* Facelo ameno, non estamos para teorías cuánticas ;-)
+* Rematar con charlas lóstrego e/ou debates abertos
+
+== Non sexades tímidos: ¡¡participar!!
+
+image::baby.gif[baby,200,300]
+
+Source: http://gif.co/vc7E.gif
+
+[background-color="#01303a"]
+== Motivación das probas unitarias
+
+[background-color="#01303a"]
+== Charlas lostrego?
+
+[background-color="#01303a"]
+== Debate aberto
+
+=== ¿Qué librería usades para testing?
+
+* JUnit 4
+* JUnit 5
+* Spock
+* Outra?
+* Non fago tests
+
+== ¿Dúbidas?
+
+* Slides:
+* Código:
+* Slack: canal #vigojug en http://www.vigotech.org
+
+

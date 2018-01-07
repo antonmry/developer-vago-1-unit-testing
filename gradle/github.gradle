@@ -1,0 +1,10 @@
+apply plugin: 'org.ajoberstar.github-pages'
+
+githubPages {
+    repoUri = 'github.com:vigojug/developer-vago-1-unit-testing.git'
+    pages {
+        from file("$buildDir/asciidoc/revealjs")
+    }
+}
+
+publishGhPages.dependsOn(asciidoctor)
