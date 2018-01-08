@@ -541,12 +541,11 @@ public class BadFibonacci {
 ----
 
 [background-color="#01303a"]
-== Integración con gradle e maven
+== Integración con gradle (e maven)
 
 === Reporte tests
 
 === Reporte cobertura
-
 
 [background-color="#01303a"]
 == Lightning talks?

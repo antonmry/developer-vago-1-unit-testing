@@ -30,6 +30,7 @@ apply plugin: 'org.ysb33r.vfs'
 apply plugin: 'java'
 // Spock
 apply plugin: "groovy"
+apply plugin: "jacoco"
 // JUnit5 Gradle Plugin
 //apply plugin: 'org.junit.platform.gradle.plugin'
 apply plugin: 'org.asciidoctor.convert'
@@ -63,6 +64,14 @@ dependencies {
     // Spock Framework
     compile "org.codehaus.groovy:groovy-all:2.4.10"
     testCompile "org.spockframework:spock-core:1.1-groovy-2.4"
+
+    // Spock Reports
+    testCompile( 'com.athaydes:spock-reports:1.4.0' ) {
+        transitive = false // this avoids affecting your version of Groovy/Spock
+    }
+    // if you don't already have slf4j-api and an implementation of it in the classpath, add this!
+    testCompile 'org.slf4j:slf4j-api:1.7.13'
+    testCompile 'org.slf4j:slf4j-simple:1.7.13'
 }
 
 ext {
@@ -123,3 +132,20 @@ allprojects {
 liveReload {
     docRoot = "$buildDir/asciidoc/revealjs"
 }
+
+// Spock Reports
+test {
+    systemProperty 'com.athaydes.spockframework.report.showCodeBlocks', true
+}
+
+jacocoTestReport {
+    reports {
+        xml.enabled false
+        csv.enabled false
+        html.destination file("${buildDir}/jacoco-reports")
+    }
+}
+
+test.finalizedBy 'jacocoTestReport'
+
+
