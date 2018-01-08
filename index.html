@@ -41,7 +41,7 @@
         FibonacciWithJUnit4 f = new FibonacciWithJUnit4();
         assertFalse(f.fibonacci(1) == 0 );
     }</code></pre></div></div></section><section id="assertequals"><h2>assertEquals</h2></section><section id="assertequals-2"><div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">    @Test
-    public void bestFibonacciTestSimple() {
+    public void improvedFibonacciTestSimple() {
         FibonacciWithJUnit4 f = new FibonacciWithJUnit4();
         assertEquals(f.fibonacci(4), 3);
     }</code></pre></div></div></section><section id="ignore"><h2>@Ignore</h2></section><section id="ignore-2"><div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">    @Ignore("Demo, no hacerlo en casa")
@@ -63,7 +63,7 @@
     }</code></pre></div></div></section><section id="timeout"><h2>timeout</h2></section><section id="timeout-2"><h2>timeout</h2><div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">    @Test(timeout = 5000)
     public void testTimeout() {
         try {
-            TimeUnit.SECONDS.sleep(100);
+            fibonacci(100);
         } catch (Exception e) {
             // Don't do this at home
         }
@@ -115,7 +115,8 @@
         Assertions.assertThrows(NullPointerException.class, () -&gt; f.fibonacci(i.intValue()));
     }</code></pre></div></div></section><section id="timeout-3"><h2>Timeout</h2></section><section id="timeout-4"><div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">    @Test()
     public void testTimeout() throws InterruptedException {
-        Assertions.assertTimeout(Duration.ofMillis(1), () -&gt; Thread.sleep(10));
+        Assertions.assertTimeout(Duration.ofMillis(1), () -&gt; fibonacci(30));
+        //Assertions.assertTimeoutPreemptively(Duration.ofSeconds(1), () -&gt; fibonacci(100));
     }</code></pre></div></div></section><section id="afterall-beforeall-aftereach"><h2>@AfterAll, @BeforeAll, @AfterEach</h2></section><section id="afterall-beforeall-aftereach-2"><div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">    private static FibonacciWithJUnit5 f2;
 
     @BeforeAll
@@ -138,8 +139,90 @@
         System.out.println("Done!");
     }</code></pre></div></div></section></section>
 <section id="test-parametrizados-con-junit-5"><h2>Test parametrizados con JUnit 5</h2></section>
-<section><section id="spock-framework" data-background-color="#01303a"><h2>Spock Framework</h2></section><section id="todo"><h2>TODO</h2></section></section>
-<section><section id="integracin-con-gradle-e-maven" data-background-color="#01303a"><h2>Integración con gradle e maven</h2></section><section id="reporte-cobertura"><h2>Reporte cobertura</h2></section></section>
+<section><section id="spock-framework" data-background-color="#01303a"><h2>Spock Framework</h2></section><section id="simple-test-with-assert"><h2>Simple test with assert</h2></section><section id="simple-test-with-assert-2"><div class="listingblock"><div class="content"><pre class="highlight"><code class="groovy language-groovy">    def "Simple test"() {
+        setup:
+        BadFibonacci f = new BadFibonacci()
+
+        expect:
+        f.fibonacci(1) == 1
+        assert f.fibonacci(4) == 3
+    }</code></pre></div></div></section><section id="simple-test-with-false"><h2>Simple test with false</h2></section><section id="simple-test-with-false-2"><div class="listingblock"><div class="content"><pre class="highlight"><code class="groovy language-groovy">    def "Simple test with Zero"() {
+        setup:
+        BadFibonacci f = new BadFibonacci()
+
+        expect:
+        f.fibonacci(1) != 0</code></pre></div></div></section><section id="groovy-truth"><h2>Groovy Truth</h2></section><section id="groovy-truth-2"><div class="listingblock"><div class="content"><pre class="highlight"><code class="groovy language-groovy">    def "not assertEquals but Groovy Truth"() {
+        setup:
+        BadFibonacci f = new BadFibonacci()
+
+        expect:
+        assert f.fibonacci(1)
+    }</code></pre></div></div></section><section id="ignore-e-ignorerest"><h2>@Ignore e @IgnoreRest</h2></section><section id="ignore-e-ignorerest-2"><div class="listingblock"><div class="content"><pre class="highlight"><code class="groovy language-groovy">    @Ignore
+    // @IgnoreRest
+    def "Simple ignored test"() {
+        setup:
+        BadFibonacci f = new BadFibonacci()
+
+        expect:
+        f.fibonacci(1) == 0
+    }</code></pre></div></div></section><section id="exceptions-3"><h2>Exceptions</h2></section><section id="exceptions-4"><div class="listingblock"><div class="content"><pre class="highlight"><code class="groovy language-groovy">    @FailsWith(MissingMethodException)
+    // @FailsWith(SpockAssertionError)
+    def "Simple test with Exception"() {
+        setup:
+        BadFibonacci f = new BadFibonacci()
+        Integer i = 0
+
+        when:
+        i = null
+
+        then:
+        notThrown(f.fibonacci(i))
+
+    }</code></pre></div></div></section><section id="test-composto"><h2>Test composto</h2></section><section id="test-composto-2"><div class="listingblock"><div class="content"><pre class="highlight"><code class="groovy language-groovy">    def "composed test with string"() {
+        setup:
+        BadFibonacci f = new BadFibonacci()
+
+        when:
+        def temp = f.fibonacci(1) + " " + f.fibonacci(4);
+
+        then:
+        temp.contains '1'
+        and:
+        temp.contains '3'
+    }</code></pre></div></div></section><section id="timeout-5"><h2>Timeout</h2></section><section id="timeout-6"><div class="listingblock"><div class="content"><pre class="highlight"><code class="groovy language-groovy">    @Ignore
+    @Timeout(value = 200, unit = MILLISECONDS)
+    def "Simple test with TimeOut"() {
+        setup:
+        BadFibonacci f = new BadFibonacci()
+
+        expect:
+        f.fibonacci(100) == 0
+    }</code></pre></div></div></section><section id="mtodos-de-axuda"><h2>Métodos de axuda</h2></section><section id="mtodos-de-axuda-2"><div class="listingblock"><div class="content"><pre class="highlight"><code class="groovy language-groovy">    def setup() {}          // run before every feature method
+    def cleanup() {}        // run after every feature method
+    def setupSpec() {}     // run before the first feature method
+    def cleanupSpec() {}   // run after the last feature method
+
+    @Subject
+    BadFibonacci f2 = new BadFibonacci()</code></pre></div></div></section></section>
+<section><section id="test-parametrizado-con-groovy" data-background-color="#01303a"><h2>Test parametrizado con Groovy</h2></section><section id="test-parametrizado"><div class="listingblock"><div class="content"><pre class="highlight"><code class="groovy language-groovy">    def "parametrized test"() {
+        setup:
+        BadFibonacci f = new BadFibonacci()
+
+        expect:
+        f.fibonacci(index) == fibonacciNumber
+
+        where:
+        index     | fibonacciNumber
+        1  | 1
+        2  | 1
+        3  | 2
+    }</code></pre></div></div></section></section>
+<section><section id="mock-e-stub" data-background-color="#01303a"><h2>Mock e Stub</h2></section><section id="mock"><h2>Mock</h2><div class="listingblock"><div class="content"><pre class="highlight"><code class="groovy language-groovy">interface Subscriber {
+    String receive(String message)
+}
+
+Subscriber subscriber = Mock()</code></pre></div></div></section><section id="stub"><h2>Stub</h2><div class="listingblock"><div class="content"><pre class="highlight"><code class="groovy language-groovy">subscriber.receive(_) &gt;&gt; "ok"</code></pre></div></div></section></section>
+<section><section id="integracin-con-gradle-e-maven" data-background-color="#01303a"><h2>Integración con gradle (e maven)</h2></section><section id="reporte-tests"><h2>Reporte tests</h2></section><section id="reporte-cobertura"><h2>Reporte cobertura</h2></section></section>
 <section id="lightning-talks" data-background-color="#01303a"><h2>Lightning talks?</h2></section>
 <section><section id="debate-aberto" data-background-color="#01303a"><h2>Debate aberto</h2></section><section id="facedes-tests-unitarios"><h2>¿Facedes tests unitarios?</h2></section><section id="qu-librera-usades-para-testing"><h2>¿Qué librería usades para testing?</h2><div class="ulist"><ul><li><p>JUnit 4</p></li><li><p>JUnit 5</p></li><li><p>Spock</p></li><li><p>Outra?</p></li><li><p>Non fago tests</p></li></ul></div></section><section id="onde-paramos"><h2>¿Onde paramos?</h2><div class="ulist"><ul><li><p>¿Métodos públicos?</p></li><li><p>¿100% de cobertura?</p></li></ul></div></section><section id="qu-usades-para-mocks"><h2>¿Qué usades para mocks?</h2></section><section id="algo-mais"><h2>¿Algo mais?</h2></section></section>
 <section id="kahoot" data-background-color="#01303a"><h2>Kahoot</h2></section>
