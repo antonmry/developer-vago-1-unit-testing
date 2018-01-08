@@ -534,9 +534,9 @@ public class BadFibonacci {
 
         where:
         index     | fibonacciNumber
-        1  | 1
-        2  | 1
-        3  | 2
+        1         | 1
+        2         | 1
+        3         | 2
     }
 ----
 

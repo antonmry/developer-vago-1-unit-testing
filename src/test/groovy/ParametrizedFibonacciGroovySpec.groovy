@@ -15,10 +15,10 @@ class ParametrizedFibonacciGroovySpec extends Specification {
         f.fibonacci(index) == fibonacciNumber
 
         where:
-        index     | fibonacciNumber
-        1  | 1
-        2  | 1
-        3  | 2
+        index | fibonacciNumber
+        1     | 1
+        2     | 1
+        3     | 2
     }
 
 }
