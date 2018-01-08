@@ -541,6 +541,27 @@ public class BadFibonacci {
 ----
 
 [background-color="#01303a"]
+== Mock e Stub
+
+=== Mock
+
+[source,groovy]
+----
+interface Subscriber {
+    String receive(String message)
+}
+
+Subscriber subscriber = Mock()
+----
+
+=== Stub
+
+[source,groovy]
+----
+subscriber.receive(_) >> "ok"
+----
+
+[background-color="#01303a"]
 == Integración con gradle (e maven)
 
 === Reporte tests

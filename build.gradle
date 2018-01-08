@@ -41,10 +41,10 @@ dependencies {
     gems 'rubygems:thread_safe:0.3.5'
 }
 
-ext.junit4Version        = '4.12'
-ext.junitVintageVersion  = '4.12.2'
+ext.junit4Version = '4.12'
+ext.junitVintageVersion = '4.12.2'
 ext.junitPlatformVersion = '1.0.2'
-ext.junitJupiterVersion  = '5.0.2'
+ext.junitJupiterVersion = '5.0.2'
 
 dependencies {
     // JUnit Jupiter API and TestEngine implementation
@@ -66,7 +66,7 @@ dependencies {
     testCompile "org.spockframework:spock-core:1.1-groovy-2.4"
 
     // Spock Reports
-    testCompile( 'com.athaydes:spock-reports:1.4.0' ) {
+    testCompile('com.athaydes:spock-reports:1.4.0') {
         transitive = false // this avoids affecting your version of Groovy/Spock
     }
     // if you don't already have slf4j-api and an implementation of it in the classpath, add this!
