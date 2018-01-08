@@ -61,7 +61,8 @@ public class FibonacciWithJUnit5 {
 
     @Test()
     public void testTimeout() throws InterruptedException {
-        Assertions.assertTimeout(Duration.ofMillis(1), () -> Thread.sleep(10));
+        Assertions.assertTimeout(Duration.ofMillis(1), () -> fibonacci(30));
+        //Assertions.assertTimeoutPreemptively(Duration.ofSeconds(1), () -> fibonacci(100));
     }
 
     private static FibonacciWithJUnit5 f2;

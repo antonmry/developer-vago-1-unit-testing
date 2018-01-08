@@ -27,7 +27,7 @@ public class FibonacciWithJUnit4 {
     }
 
     @Test
-    public void bestFibonacciTestSimple() {
+    public void improvedFibonacciTestSimple() {
         FibonacciWithJUnit4 f = new FibonacciWithJUnit4();
         assertEquals(f.fibonacci(4), 3);
     }
@@ -57,7 +57,7 @@ public class FibonacciWithJUnit4 {
     @Test(timeout = 1000)
     public void testTimeout() {
         try {
-            TimeUnit.SECONDS.sleep(100);
+            fibonacci(100);
         } catch (Exception e) {
             // Don't do this at home
         }
