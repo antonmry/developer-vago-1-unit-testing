@@ -32,10 +32,10 @@
         System.out.println("Result: " + fibonacci(4));
     }
 }</code></pre></div></div></section></section>
-<section><section id="junit-4" data-background-color="#01303a"><h2>JUnit 4</h2></section><section id="test-e-assert"><h2>@test e assert</h2></section><section id="test-e-assert-2"><div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">    @Test
+<section><section id="junit-4" data-background-color="#01303a"><h2>JUnit 4</h2></section><section id="test-e-asserttrue"><h2>@test e assertTrue</h2></section><section id="test-e-asserttrue-2"><div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">    @Test
     public void fibonacciTestSimple() {
         FibonacciWithJUnit4 f = new FibonacciWithJUnit4();
-        assert(f.fibonacci(4) == 3);
+        assertTrue(f.fibonacci(4) == 3);
     }</code></pre></div></div></section><section id="assertfalse"><h2>assertFalse</h2></section><section id="assertfalse-2"><div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">    @Test
     public void fibonacciTestZero() {
         FibonacciWithJUnit4 f = new FibonacciWithJUnit4();
@@ -60,7 +60,7 @@
         Integer i = 0;
         i = null;
         f.fibonacci(i.intValue());
-    }</code></pre></div></div></section><section id="timeout"><h2>timeout</h2></section><section id="timeout-2"><h2>timeout</h2><div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">    @Test(timeout = 5000)
+    }</code></pre></div></div></section><section id="timeout"><h2>timeout</h2></section><section id="timeout-2"><div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">    @Test(timeout = 5000)
     public void testTimeout() {
         try {
             fibonacci(100);
@@ -89,7 +89,7 @@
         System.out.println("Done!");
     }</code></pre></div></div></section></section>
 <section id="test-parametrizados-con-junit-4"><h2>Test parametrizados con JUnit 4</h2></section>
-<section><section id="junit-5" data-background-color="#01303a"><h2>JUnit 5</h2></section><section id="introduccin"><h2>Introducción</h2><div class="ulist"><ul><li><p>Mais granular</p></li><li><p>Permite mais runners e extensións</p></li><li><p>Java 8</p></li><li><p>Compatibilidade con JUnit 4</p></li></ul></div></section><section id="test-e-assert-3"><h2>@Test e assert</h2></section><section id="test-e-assert-4"><div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">    @Test
+<section><section id="junit-5" data-background-color="#01303a"><h2>JUnit 5</h2></section><section id="introduccin"><h2>Introducción</h2><div class="ulist"><ul><li><p>Mais granular</p></li><li><p>Permite mais runners e extensións</p></li><li><p>Java 8</p></li><li><p>Compatibilidade con JUnit 4</p></li></ul></div></section><section id="test-e-assert"><h2>@Test e assert</h2></section><section id="test-e-assert-2"><div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">    @Test
     public void fibonacciTestSimple() {
         FibonacciWithJUnit5 f = new FibonacciWithJUnit5();
         Assertions.assertTrue(
