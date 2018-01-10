@@ -6,6 +6,7 @@ import static org.hamcrest.CoreMatchers.containsString;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 public class FibonacciWithJUnit4 {
 
@@ -17,7 +18,7 @@ public class FibonacciWithJUnit4 {
     @Test
     public void fibonacciTestSimple() {
         FibonacciWithJUnit4 f = new FibonacciWithJUnit4();
-        assert (fibonacci(4) == 3);
+        assertTrue(fibonacci(4) == 3);
     }
 
     @Test

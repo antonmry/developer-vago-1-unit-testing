@@ -110,25 +110,25 @@ public class BadFibonacci {
 [background-color="#01303a"]
 == JUnit 4
 
-=== @test e assert
+=== @test e assertTrue
 
 [%notitle]
-=== @test e assert
+=== @test e assertTrue
 
 [source,java]
 ----
     @Test
     public void fibonacciTestSimple() {
         FibonacciWithJUnit4 f = new FibonacciWithJUnit4();
-        assert(f.fibonacci(4) == 3);
+        assertTrue(f.fibonacci(4) == 3);
     }
 ----
 
 === assertFalse
 
 [%notitle]
-
 === assertFalse
+
 [source,java]
 ----
     @Test
@@ -200,8 +200,8 @@ public class BadFibonacci {
 
 === timeout
 
-=== timeout
 [%notitle]
+=== timeout
 
 [source,java]
 ----
